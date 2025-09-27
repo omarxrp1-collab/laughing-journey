@@ -1,7 +1,37 @@
 general:
   base_equity: 100000
-  symbols_initial: ["BTCUSDT","ETHUSDT","SOLUSDT","XRPUSDT"]
+  symbols_initial: ["BTCUSDT","ETHUSDT","SOLUSDT","XRPUSDT"]  # سيتم التوسيع ديناميكياً عبر UniverseAgent
   timeframes: ["1m","5m","15m","1h"]
+
+universe:
+  refresh_sec: 300
+  max_symbols_total: 120
+  volume_24h_min: 5000000      # حد أدنى للسيولة
+  spread_max_pct: 0.0015       # 0.15%
+  symbols_limit: 120
+  exclude_patterns: ["BULL","BEAR","3L","3S"]
+  tier_risk_multipliers:
+    Tier1: 1.0
+    Tier2: 0.7
+    Tier3: 0.4
+    Tier4: 0.0
+  volume_thresholds:
+    Tier1: 100000000
+    Tier2: 20000000
+    Tier3: 5000000
+  spread_thresholds:
+    Tier1: 0.0008
+    Tier2: 0.0015
+    Tier3: 0.0030
+  min_candles_last_hour: 55
+  funding_abs_block: 0.05
+  funding_abs_warn: 0.02
+  cluster_exposure_limit: 0.08
+  symbol_retire_loss_trades: 6
+  retire_cooldown_min: 180
+  performance_window_trades: 40
+  min_reversion_hits_per_day: 6
+  allow_shadow_tier4: true
 
 thresholds:
   signal_prob_min: 0.62
@@ -10,23 +40,33 @@ thresholds:
   min_r_expectancy: 0.7
 
 risk:
-  fixed_per_trade_pct: 0.01    # 1% لكل صفقة
-  max_total_exposure: 0.30     # % من رأس المال كنسبة قيمة عقود مفتوحة
+  dynamic: false           # تعطيل المخاطرة الديناميكية
+  fixed_risk_pct: 0.01     # مخاطرة ثابتة = 1% من رأس المال لكل صفقة
+  max_total_exposure: 0.30 # أقصى تعرض إجمالي 30%
   max_positions: 12
+  per_symbol_cooldown_min: 5
+  daily_risk_budget_pct: 0.12
+  correlation_overlap_limit: 0.65
+  block_on_dd_levels:
+    level1: 0.03
+    level2: 0.05
+    level3: 0.07
   min_stop_pct: 0.002
-  max_stop_pct: 0.015
+  max_stop_pct: 0.02
   reject_if_stop_out_of_range: true
-  min_r_expectancy: 0.7
 
 stops_targets:
   base_atr_mult: 1.2
-  volatile_atr_mult: 1.6
+  volatile_atr_mult: 1.7
   calm_atr_mult: 0.9
   swing_lookback: 30
   liquidity_buffer_pct: 0.0008
   eae_influence: 0.4
   tp_mode: adaptive
   tp_distribution: [0.4, 0.35, 0.25]
+  tp_multipliers_low_vol: [0.8, 1.2, 2.0]
+  tp_multipliers_mid_vol: [0.6, 1.0, 1.8]
+  tp_multipliers_high_vol: [0.5, 0.9, 1.5]
 
 trail:
   enable: true
@@ -52,23 +92,28 @@ trail:
   min_trail_step_pct: 0.0004
   amend_cooldown_sec: 15
 
-universe:
-  refresh_sec: 300
-  volume_24h_min: 5000000
-  spread_max_pct: 0.12
-  symbols_limit: 50
-  exclude_patterns: ["BULL","BEAR","3L","3S"]
+calibration:
   enable: true
-  default_tier: Tier2
+  reliability_bins: 10
+  recalibrate_every_trades: 200
+
+correlation:
+  enable: true
+  window_bars: 240      # ~4 ساعات على إطار 1m
+  refresh_sec: 900
+  cluster_method: "simple"
+  max_same_cluster_positions: 3
 
 monitoring:
   latency_warn_ms: 800
   fill_ratio_warn: 0.6
   seq_losses_warn: 6
   model_conf_warn: 0.55
+  dashboard_refresh_sec: 5
 
 execution:
   post_only: true
   partial_fraction: 0.5
   slip_buffer_pct: 0.0005
   cancel_stale_sec: 60
+  max_slippage_pct: 0.003
