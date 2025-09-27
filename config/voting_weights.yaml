@@ -1,0 +1,33 @@
+meta:
+  version: 1
+defaults:
+  min_score: 0.62
+  min_voters: 5
+  calibration:
+    a: -0.40
+    b: 2.80
+symbols:
+  BTCUSDT:
+    min_score: 0.62
+    min_voters: 5
+    weights:
+      D: 0.18
+      R: 0.12
+      DIV: 0.14
+      EXH: 0.07
+      ML: 0.23
+      REG: 0.11
+      VOL: 0.10
+      OFI: 0.05
+  ETHUSDT:
+    min_score: 0.61
+    min_voters: 5
+    weights:
+      D: 0.17
+      R: 0.13
+      DIV: 0.13
+      EXH: 0.08
+      ML: 0.24
+      REG: 0.10
+      VOL: 0.10
+      OFI: 0.05

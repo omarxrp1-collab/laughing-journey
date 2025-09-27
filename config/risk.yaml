@@ -1,0 +1,19 @@
+risk:
+  dynamic: true
+  base_risk_pct: 0.004
+  min_risk_pct: 0.002
+  max_risk_pct: 0.015
+  daily_risk_budget_pct: 0.10
+  max_total_exposure: 0.25
+  max_per_trade_exposure: 0.05
+  correlation_overlap_limit: 0.65
+  block_on_dd_levels:
+    level1: 0.03
+    level2: 0.05
+    level3: 0.07
+leverage:
+  enable: true
+  default: 5
+  max_per_trade_margin_pct: 0.20
+  max_total_margin_pct: 0.60
+  min_liquidation_buffer_pct: 0.012

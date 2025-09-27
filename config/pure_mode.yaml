@@ -1,0 +1,21 @@
+pure_mode:
+  min_signal_weight: 0.62
+  min_active_events: 5
+  min_stop_pct: 0.0018
+  max_stop_pct: 0.014
+  sequence_exhaust_len: 5
+  impulse_window: 8
+  impulse_min_change_pct: 0.004
+  exhaustion_tail_ratio: 1.6
+  exhaustion_range_drop_ratio: 0.55
+  max_false_break_lookback: 30
+  progress_protect_events: 3
+  progress_expand_events: 5
+  progress_harvest_events: 7
+  stagnation_minutes: 18
+risk_proxy:
+  base_risk_pct: 0.004
+  min_risk_pct: 0.002
+  max_risk_pct: 0.012
+cooldowns:
+  per_symbol_sec: 120

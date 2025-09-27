@@ -1,0 +1,7 @@
+execution:
+  enable_real: false
+  partial_limit_fraction: 0.5
+  max_slippage_pct: 0.0012
+  slip_warning_pct: 0.0007
+  cancel_stale_sec: 45
+  order_id_prefix: "SIM"
