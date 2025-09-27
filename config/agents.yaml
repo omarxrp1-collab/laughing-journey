@@ -1,0 +1,74 @@
+general:
+  base_equity: 100000
+  symbols_initial: ["BTCUSDT","ETHUSDT","SOLUSDT","XRPUSDT"]
+  timeframes: ["1m","5m","15m","1h"]
+
+thresholds:
+  signal_prob_min: 0.62
+  rsi_extreme_low: 25
+  rsi_extreme_high: 75
+  min_r_expectancy: 0.7
+
+risk:
+  fixed_per_trade_pct: 0.01    # 1% لكل صفقة
+  max_total_exposure: 0.30     # % من رأس المال كنسبة قيمة عقود مفتوحة
+  max_positions: 12
+  min_stop_pct: 0.002
+  max_stop_pct: 0.015
+  reject_if_stop_out_of_range: true
+  min_r_expectancy: 0.7
+
+stops_targets:
+  base_atr_mult: 1.2
+  volatile_atr_mult: 1.6
+  calm_atr_mult: 0.9
+  swing_lookback: 30
+  liquidity_buffer_pct: 0.0008
+  eae_influence: 0.4
+  tp_mode: adaptive
+  tp_distribution: [0.4, 0.35, 0.25]
+
+trail:
+  enable: true
+  protect_r: 0.5
+  expand_r: 1.0
+  harvest_r: 1.8
+  lock_levels:
+    - { r: 0.5, lock_frac: 0.05 }
+    - { r: 1.0, lock_frac: 0.35 }
+    - { r: 1.5, lock_frac: 0.75 }
+  atr_alpha:
+    protect: 1.8
+    expand: 1.4
+    harvest: 1.1
+  chandelier_lookback: 14
+  stagnation_minutes: 20
+  decay_minutes: 35
+  decay_beta: 0.4
+  pullback_tolerance:
+    low: 0.25
+    medium: 0.20
+    high: 0.15
+  min_trail_step_pct: 0.0004
+  amend_cooldown_sec: 15
+
+universe:
+  refresh_sec: 300
+  volume_24h_min: 5000000
+  spread_max_pct: 0.12
+  symbols_limit: 50
+  exclude_patterns: ["BULL","BEAR","3L","3S"]
+  enable: true
+  default_tier: Tier2
+
+monitoring:
+  latency_warn_ms: 800
+  fill_ratio_warn: 0.6
+  seq_losses_warn: 6
+  model_conf_warn: 0.55
+
+execution:
+  post_only: true
+  partial_fraction: 0.5
+  slip_buffer_pct: 0.0005
+  cancel_stale_sec: 60
